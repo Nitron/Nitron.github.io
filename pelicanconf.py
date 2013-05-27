@@ -22,7 +22,8 @@ CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
 
 # Blogroll
-LINKS =  (('Marco\'s Modern Life', 'http://marcosmodernlife.com/'),)
+LINKS =  (('Marco\'s Modern Life', 'http://marcosmodernlife.com/'),
+	  ('My GPG Key', 'christopher_williams.asc'),)
 
 # Social widget
 SOCIAL = (('twitter', 'http://twitter.com/williacb'),
@@ -32,7 +33,8 @@ SOCIAL = (('twitter', 'http://twitter.com/williacb'),
 	  ('google+', 'https://plus.google.com/105480770411888666744/posts'),
 )
 
-FILES_TO_COPY = (('extra/CNAME', 'CNAME'),)
+FILES_TO_COPY = (('extra/CNAME', 'CNAME'),
+		 ('extra/christopher_williams.asc', 'christopher_williams.asc'),)
 
 DEFAULT_PAGINATION = 10
 
