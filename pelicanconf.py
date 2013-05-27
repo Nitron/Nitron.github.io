@@ -11,7 +11,6 @@ TIMEZONE = 'America/New_York'
 
 PLUGIN_PATH = 'plugins/'
 PLUGINS = (
-	'gist',
 	'code_include',
 )
 
@@ -41,5 +40,6 @@ DEFAULT_PAGINATION = 10
 #RELATIVE_URLS = True
 
 # Theme settings
-THEME = 'waterspill-en'
+THEME = 'themes/waterspill-en'
 SUPPRESS_CATEGORIES_ON_MENU = True
+GOOGLE_ANALYTICS = 'UA-3121244-2'
