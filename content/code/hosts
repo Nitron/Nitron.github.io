@@ -1,0 +1,7 @@
+[...]
+ 
+# Fake DNS entries for testing the subdomain middleware
+127.0.0.1	test1.django.local
+127.0.0.1	test2.django.local
+127.0.0.1	djangotest.christopher-williams.net
+127.0.0.1	django.local
