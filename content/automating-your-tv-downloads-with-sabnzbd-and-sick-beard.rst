@@ -3,6 +3,7 @@ Automating your TV downloads with SABnzbd+ and Sick Beard
 :date: 2010-08-18 23:57
 :category: Tutorials
 :slug: automating-your-tv-downloads-with-sabnzbd-and-sick-beard
+:alias: /2010/08/automating-your-tv-downloads-with-sabnzbd-and-sick-beard/
 
 Why bother with a DVR when you can get your computer to automatically
 download TV shows soon after they air? By using a few open-source tools

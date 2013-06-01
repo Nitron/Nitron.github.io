@@ -3,6 +3,7 @@ Automating your TV show downloads with SABnzbd+ and Sick Beard Part 2: Mac OS X
 :date: 2010-09-02 13:21
 :category: Tutorials
 :slug: automating-your-tv-show-downloads-with-sabnzbd-and-sick-beard-part-2-mac-os-x
+:alias: /2010/09/automating-your-tv-show-downloads-with-sabnzbd-and-sick-beard-part-2-mac-os-x/
 
 In my previous post, `Automating your TV downloads with SABnzbd+ and
 Sick Beard`_, we installed a system for automatically downloading TV

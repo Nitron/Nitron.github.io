@@ -3,6 +3,7 @@ Django Subdomain Middleware with CNAME Support
 :date: 2012-07-16 19:19
 :category: Computer Science
 :slug: django-subdomain-middleware-with-cname-support
+:alias: /2012/07/django-subdomain-middleware-with-cname-support/
 
 For a personal project (details forthcoming), I've been trying to have
 separate subdomains for accounts and allow some of these accounts to

@@ -4,6 +4,7 @@ Automating Your Movie Downloads with SABnzbd+ and CouchPotato
 :author: chris
 :category: Tutorials
 :slug: automating-your-movie-downloads-with-sabnzbd-and-couchpotato
+:alias: /2011/02/automating-your-movie-downloads-with-sabnzbd-and-couchpotato/
 
 Now that you're set up to automatically download TV shows with `SABnzbd+
 and Sick Beard`_ (and if you're not, you should go back to that post and
