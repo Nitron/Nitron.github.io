@@ -1,6 +1,3 @@
-[submodule "plugins/alias"]
-	path = plugins/alias
-	url = git@github.com:Nitron/pelican-plugin-alias.git
 [submodule "themes/octopress"]
 	path = themes/octopress
 	url = git@github.com:Nitron/pelican-octopress-theme.git

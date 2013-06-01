@@ -21,7 +21,7 @@ DELETE_OUTPUT_DIRECTORY = True
 # Following items are often useful when publishing
 
 PLUGINS += [
-    'alias',
+    'pelican_alias',
     'minify',
 ]
 
