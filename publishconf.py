@@ -22,6 +22,7 @@ DELETE_OUTPUT_DIRECTORY = True
 
 PLUGINS += [
     'alias',
+    'minify',
 ]
 
 #DISQUS_SITENAME = ""
