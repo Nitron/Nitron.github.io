@@ -10,10 +10,9 @@ GITHUB_URL = 'http://github.com/Nitron/'
 TIMEZONE = 'America/New_York'
 
 PLUGIN_PATH = 'plugins/'
-PLUGINS = (
+PLUGINS = [
     'code_include',
-    'alias',
-)
+]
 
 DEFAULT_LANG = u'en'
 
@@ -36,12 +35,13 @@ SOCIAL = (('twitter', 'http://twitter.com/williacb'),
 FILES_TO_COPY = (('extra/CNAME', 'CNAME'),
                  ('extra/christopher_williams.asc', 'christopher_williams.asc'),)
 
+GITHUB_USER = 'Nitron'
+GITHUB_REPO_COUNT = 5
+
 DEFAULT_PAGINATION = 10
 
 # Uncomment following line if you want document-relative URLs when developing
-#RELATIVE_URLS = True
+RELATIVE_URLS = True
 
 # Theme settings
-THEME = 'themes/waterspill-en'
-SUPPRESS_CATEGORIES_ON_MENU = True
-GOOGLE_ANALYTICS = 'UA-3121244-2'
+THEME = 'themes/octopress'
