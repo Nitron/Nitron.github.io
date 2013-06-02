@@ -22,8 +22,23 @@ DELETE_OUTPUT_DIRECTORY = True
 
 PLUGINS += [
     'pelican_alias',
+    'sitemap',
     #'minify',
 ]
+
+SITEMAP = {
+    'format': 'xml',
+    'priorities': {
+        'articles': 0.5,
+        'indexes': 0.5,
+        'pages': 0.5
+    },
+    'changefreqs': {
+        'articles': 'monthly',
+        'indexes': 'daily',
+        'pages': 'monthly'
+    }
+}
 
 #DISQUS_SITENAME = ""
 GOOGLE_ANALYTICS = 'UA-3121244-2'
