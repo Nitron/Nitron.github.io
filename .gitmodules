@@ -1,3 +1,6 @@
 [submodule "themes/octopress"]
 	path = themes/octopress
 	url = git@github.com:Nitron/pelican-octopress-theme.git
+[submodule "pelican_plugins"]
+	path = pelican_plugins
+	url = git@github.com:Nitron/pelican-plugins.git

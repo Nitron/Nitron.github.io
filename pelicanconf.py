@@ -9,7 +9,7 @@ GITHUB_URL = 'http://github.com/Nitron/'
 
 TIMEZONE = 'America/New_York'
 
-PLUGIN_PATH = 'plugins/'
+PLUGIN_PATH = 'pelican_plugins/'
 PLUGINS = [
     'code_include',
 ]
