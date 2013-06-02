@@ -44,11 +44,11 @@ The Code
 
 */etc/hosts*:
 
-.. code-include:: code/hosts
+.. code-include:: code/django-subdomain-middleware-with-cname-support/hosts
 
 *middleware.py*:
 
-.. code-include:: code/middleware.py
+.. code-include:: code/django-subdomain-middleware-with-cname-support/middleware.py
 	:lexer: python
 	:tab-width: 4
 

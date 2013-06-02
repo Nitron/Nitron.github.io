@@ -22,7 +22,7 @@ DELETE_OUTPUT_DIRECTORY = True
 
 PLUGINS += [
     'pelican_alias',
-    'minify',
+    #'minify',
 ]
 
 #DISQUS_SITENAME = ""
