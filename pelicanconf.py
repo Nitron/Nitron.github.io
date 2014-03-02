@@ -35,8 +35,8 @@ SOCIAL = (('twitter', 'http://twitter.com/williacb'),
 FILES_TO_COPY = (('extra/CNAME', 'CNAME'),
                  ('extra/christopher_williams.asc', 'christopher_williams.asc'),)
 
-GITHUB_USER = 'Nitron'
-GITHUB_REPO_COUNT = 5
+# GITHUB_USER = 'Nitron'
+# GITHUB_REPO_COUNT = 5
 
 DEFAULT_PAGINATION = 10
 
