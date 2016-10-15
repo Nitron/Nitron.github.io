@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Christopher Williams</title><link href="http://christopher-williams.net/" rel="alternate"></link><link href="http://christopher-williams.net/feeds/all.atom.xml" rel="self"></link><id>http://christopher-williams.net/</id><updated>2013-06-12T22:45:00-04:00</updated><entry><title>Arch Linux Full-disk-encryption with Yubikey</title><link href="http://christopher-williams.net/archlinux-luks-yubikey-mkinitcpio-solution.html" rel="alternate"></link><published>2013-06-12T22:45:00-04:00</published><updated>2013-06-12T22:45:00-04:00</updated><author><name>chris</name></author><id>tag:christopher-williams.net,2013-06-12:archlinux-luks-yubikey-mkinitcpio-solution.html</id><summary type="html">&lt;p&gt;When using LUKS with Arch Linux, I had some difficulty getting my Yubikey to
+work for entering the passphrase. I solved this problem once and then promptly
+forgot the solution, so this time I'm writing it down. The key is that the
+&lt;em&gt;block&lt;/em&gt; and &lt;em&gt;keyboard&lt;/em&gt; hooks must be before the &lt;em&gt;autodetect&lt;/em&gt; hook:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;/etc/mkinitcpio.conf&lt;/em&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[...]
+HOOKS=&amp;quot;base udev block keyboard autodetect modconf encrypt lvm2 filesystems fsck&amp;quot;
+[...]
+&lt;/pre&gt;&lt;/div&gt;
+</summary></entry><entry><title>Django Subdomain Middleware with CNAME Support</title><link href="http://christopher-williams.net/django-subdomain-middleware-with-cname-support.html" rel="alternate"></link><published>2012-07-16T19:19:00-04:00</published><updated>2012-07-16T19:19:00-04:00</updated><author><name>Christopher Williams</name></author><id>tag:christopher-williams.net,2012-07-16:django-subdomain-middleware-with-cname-support.html</id><summary type="html">&lt;p&gt;For a personal project (details forthcoming), I've been trying to have
+separate subdomains for accounts and allow some of these accounts to
+have CNAME support. So, if I have an account &lt;em&gt;cwilliams&lt;/em&gt;, my data should
+be available at &lt;em&gt;cwilliams.myproject.com&lt;/em&gt;. I could also add
+&lt;em&gt;myproject.christopher-williams.net&lt;/em&gt; as a CNAME and get the same view.&lt;/p&gt;
+&lt;p&gt;The implementation is fairly straightforward. I ended up taking
+&lt;a class="reference external" href="https://github.com/tkaemming/django-subdomains/"&gt;django-subdomains&lt;/a&gt;, removing some functionality that I didn't need and
+adding the CNAME handling.&lt;/p&gt;
+&lt;p&gt;To use this middleware:&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Put &lt;em&gt;middleware.py&lt;/em&gt; (see below) somewhere in your project. I have a
+Django app called &lt;em&gt;core&lt;/em&gt; for things like this.&lt;/li&gt;
+&lt;li&gt;Add a CNAME field to a model of your choosing (a user profile might
+be appropriate), preferably as a CharField. URLField will not work.&lt;/li&gt;
+&lt;li&gt;Add a SlugField to the same model and wire that up like you would any
+other slug.&lt;/li&gt;
+&lt;li&gt;Add a new &lt;em&gt;subdomain_urls.py&lt;/em&gt; and put the URLconf that should be
+used for your subdomains/CNAMEs.&lt;/li&gt;
+&lt;li&gt;Add &lt;em&gt;SUBDOMAIN_URLCONF='yourproject.subdomain_urls'&lt;/em&gt; to
+&lt;em&gt;settings.py&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;Add &lt;em&gt;core.middleware.SubdomainMiddleware&lt;/em&gt; to &lt;em&gt;MIDDLEWARE_CLASSES&lt;/em&gt; in
+&lt;em&gt;settings.py&lt;/em&gt; (bottom of the list should work for most usages).&lt;/li&gt;
+&lt;li&gt;Create some fake DNS entries in your &lt;em&gt;hosts&lt;/em&gt; file (see below).&lt;/li&gt;
+&lt;li&gt;Set up your slug/CNAME entries created in your model (i.e. for slugs,
+&lt;em&gt;test1&lt;/em&gt;, &lt;em&gt;test2&lt;/em&gt;. For CNAMEs, &lt;em&gt;djangotest.christopher-williams.net&lt;/em&gt;,
+etc.)&lt;/li&gt;
+&lt;li&gt;Open your fake subdomains in your browser.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Any hostname that doesn't have a corresponding slug/CNAME will be routed
+through your &lt;em&gt;ROOT_URLCONF&lt;/em&gt;. Otherwise, you should see what's in your
+&lt;em&gt;SUBDOMAIN_URLCONF&lt;/em&gt;.&lt;/p&gt;
+&lt;div class="section" id="the-code"&gt;
+&lt;h2&gt;The Code&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;/etc/hosts&lt;/em&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;[...]
+
+# Fake DNS entries for testing the subdomain middleware
+127.0.0.1       test1.django.local
+127.0.0.1       test2.django.local
+127.0.0.1       djangotest.christopher-williams.net
+127.0.0.1       django.local
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;middleware.py&lt;/em&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.utils.cache&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;patch_vary_headers&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.conf&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;settings&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.db.models&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Q&lt;/span&gt;
+
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;account.models&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Account&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;SubdomainMiddleware&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;process_request&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="c1"&gt;# Strip off the port, mostly useful for development environments&lt;/span&gt;
+        &lt;span class="n"&gt;fqdn&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_host&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;:&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+        &lt;span class="c1"&gt;# Break up the domain into parts and get the subdomain slug&lt;/span&gt;
+        &lt;span class="n"&gt;domain_parts&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fqdn&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;domain_parts&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;subdomain&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;domain_parts&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+            &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;subdomain&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;www&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;subdomain&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
+        &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;subdomain&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;
+
+        &lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;account&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Account&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+                &lt;span class="n"&gt;Q&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cname&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;fqdn&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;
+                &lt;span class="n"&gt;Q&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;slug&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;subdomain&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+            &lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="n"&gt;Account&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DoesNotExist&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;pass&lt;/span&gt;
+        &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;urlconf&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;settings&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SUBDOMAIN_URLCONF&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;process_response&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;request&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;patch_vary_headers&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;response&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Host&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,))&lt;/span&gt;
+        &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;response&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+</summary></entry></feed>
