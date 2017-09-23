@@ -5,28 +5,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://christopher-williams.net/index.html</loc>
-<lastmod>2017-09-23T11:17:44-00:00</lastmod>
+<lastmod>2017-09-23T11:18:19-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://christopher-williams.net/archives.html</loc>
-<lastmod>2017-09-23T11:17:44-00:00</lastmod>
+<lastmod>2017-09-23T11:18:19-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://christopher-williams.net/tags.html</loc>
-<lastmod>2017-09-23T11:17:44-00:00</lastmod>
+<lastmod>2017-09-23T11:18:19-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://christopher-williams.net/categories.html</loc>
-<lastmod>2017-09-23T11:17:44-00:00</lastmod>
+<lastmod>2017-09-23T11:18:19-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
@@ -54,28 +54,28 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://christopher-williams.net/category/computer-science.html</loc>
-<lastmod>2017-09-23T11:17:44-00:00</lastmod>
+<lastmod>2017-09-23T11:18:19-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://christopher-williams.net/category/tutorials.html</loc>
-<lastmod>2017-09-23T11:17:44-00:00</lastmod>
+<lastmod>2017-09-23T11:18:19-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://christopher-williams.net/author/christopher-williams.html</loc>
-<lastmod>2017-09-23T11:17:44-00:00</lastmod>
+<lastmod>2017-09-23T11:18:19-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>http://christopher-williams.net/author/chris.html</loc>
-<lastmod>2017-09-23T11:17:44-00:00</lastmod>
+<lastmod>2017-09-23T11:18:19-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>0.5</priority>
 </url>
